@@ -30,7 +30,7 @@ public class CommandFactory {
             )
         )
         .andThen(new AlignToPose(drive))
-        .andThen(new WaitCommand(0.5))
+        .andThen(new WaitCommand(1))
         .andThen(new CoralExtake(cWheels).withTimeout(0.5))
         .andThen(
             Commands.parallel(
@@ -82,7 +82,7 @@ public class CommandFactory {
              )
         )
         .andThen(new AlignToPose(drive))
-        .andThen(new WaitCommand(0.5))
+        .andThen(new WaitCommand(0.25))
         .andThen(new CoralExtake(cWheels).withTimeout(0.5))
         .andThen(
             Commands.parallel(
