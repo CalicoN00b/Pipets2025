@@ -23,9 +23,9 @@ public class ZeroAlgaeFlipper extends Command {
     @Override
     public void end(boolean interrupted) {
         if (!interrupted) {
-            m_algaeFlipper.setNeutral();
             m_algaeFlipper.setPosition(AlgaeConstants.kAngleDown);
         }
+        m_algaeFlipper.setNeutral();
     }
 
 }

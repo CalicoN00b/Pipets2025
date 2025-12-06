@@ -112,7 +112,7 @@ public class RobotContainer {
     );
 
     m_driverController.back().onTrue(
-      new InstantCommand(() -> {m_elevatorSubsystem.resetSensorPosition(ElevatorConstants.HOME);})
+      new InstantCommand(() -> {m_elevatorSubsystem.resetSensorPosition(ElevatorConstants.HOME);}, m_elevatorSubsystem)
     );
 
     m_driverController.a().whileTrue(
