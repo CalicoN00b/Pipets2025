@@ -79,6 +79,8 @@ dependencies {
 test {
     useJUnitPlatform()
     systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+
+    dependsOn gradle.includedBuild('BulldogLib').task(':bulldoglib:test')
 }
 
 // Simulation configuration (e.g. environment variables).
