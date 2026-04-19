@@ -31,6 +31,6 @@ props.setProperty("org.gradle.internal.native.headers.unresolved.dependencies.ig
 
 includeBuild('BulldogLib') {
     dependencySubstitution {
-        substitute module('net.calicoctl:bulldoglib') using project(':lib')
+        substitute module('net.calicoctl:bulldoglib') using project(':bulldoglib')
     }
 }

@@ -105,4 +105,4 @@ tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
 }
 
-downloadDepsPreemptively.dependsOn gradle.includedBuild('BulldogLib').task(':lib:jar')
+downloadDepsPreemptively.dependsOn gradle.includedBuild('BulldogLib').task(':bulldoglib:jar')
