@@ -3,24 +3,21 @@ package frc.robot.subsystems.coral;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CoralConstants;
+import net.calicoctl.bulldoglib.control.BulldogTalonFX;
 
 public class CoralFlipperSubsystem extends SubsystemBase {
-    
-    private final TalonFX flipMotor;
-    private final TalonFXConfiguration config;
+
+    private final BulldogTalonFX flipMotor;
 
     public CoralFlipperSubsystem() {
 
-        flipMotor = new TalonFX(CoralConstants.flipMotorID);
-        config = new TalonFXConfiguration();
+        TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.Slot0.kP = CoralConstants.kP;
         config.Slot0.kI = CoralConstants.kI;
@@ -33,16 +30,11 @@ public class CoralFlipperSubsystem extends SubsystemBase {
 
         config.Feedback.SensorToMechanismRatio = 36; // 36:1 gear ratio
 
-        flipMotor.getConfigurator().apply(config);
-
-        flipMotor.setPosition(0);
-
+        flipMotor = new BulldogTalonFX(CoralConstants.flipMotorID, "CoralFlipMotor", config);
     }
 
     @Override
-    public void periodic() {
-        SmartDashboard.putNumber("Coral Flipper Motor Rotations", flipMotor.getPosition().getValueAsDouble());
-    }
+    public void periodic() {}
 
     public void setPosition(Angle angle) {
         flipMotor.setControl(new PositionVoltage(angle.in(Units.Rotations)));
@@ -53,19 +45,19 @@ public class CoralFlipperSubsystem extends SubsystemBase {
     }
 
     public void resetSensorPosition(Angle setpoint) {
-        flipMotor.setPosition(setpoint.in(Units.Rotations));
+        flipMotor.resetPosition(setpoint.in(Units.Rotations));
     }
 
     public double getCurrentPosition() {
-        return flipMotor.getPosition().getValueAsDouble();
+        return flipMotor.getPosition();
     }
 
     public double getCurrentVelocity() {
-        return flipMotor.getVelocity().getValueAsDouble();
+        return flipMotor.getVelocity();
     }
 
     public double getSupplyCurrent() {
-        return flipMotor.getSupplyCurrent().getValueAsDouble();
+        return flipMotor.getSupplyCurrent();
     }
 
     public void setCoralFlipperManual(double speed) {
@@ -73,6 +65,6 @@ public class CoralFlipperSubsystem extends SubsystemBase {
     }
 
     public void stopMotorsManual() {
-        flipMotor.stopMotor();
+        flipMotor.stop();
     }
 }

@@ -3,25 +3,25 @@ package frc.robot.subsystems.algae;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.AlgaeConstants;
+import net.calicoctl.bulldoglib.control.BulldogTalonFX;
 
 public class AlgaeFlipperSubsystem extends SubsystemBase {
     
-    private final TalonFX flipMotor;
-    private final TalonFXConfiguration config;
+    // private final TalonFX flipMotor;
+    // private final TalonFXConfiguration config;
+
+    private final BulldogTalonFX flipMotor;
 
     public AlgaeFlipperSubsystem() {
 
-        flipMotor = new TalonFX(AlgaeConstants.flipMotorID);
-        config = new TalonFXConfiguration();
+        TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.Slot0.kP = AlgaeConstants.kP;
         config.Slot0.kI = AlgaeConstants.kI;
@@ -38,16 +38,14 @@ public class AlgaeFlipperSubsystem extends SubsystemBase {
 
         config.Feedback.SensorToMechanismRatio = 45; // 45:1 gear ratio
 
-        flipMotor.getConfigurator().apply(config);
+        flipMotor = new BulldogTalonFX(AlgaeConstants.flipMotorID, "AlgaeFlipMotor", config);
 
-        flipMotor.setPosition(0);
+        flipMotor.resetPosition(0);
 
     }
 
     @Override
-    public void periodic() {
-        SmartDashboard.putNumber("Algae Flip Motor Position", flipMotor.getPosition().getValueAsDouble());
-    }
+    public void periodic() {}
 
     public void setPosition(Angle angle) {
         flipMotor.setControl(new PositionVoltage(angle.in(Units.Rotations)));
@@ -58,15 +56,15 @@ public class AlgaeFlipperSubsystem extends SubsystemBase {
     }
 
     public void resetSensorPosition(Angle setpoint) {
-        flipMotor.setPosition(setpoint.in(Units.Rotations));
+        flipMotor.resetPosition(setpoint.in(Units.Rotations));
     }
 
     public double getCurrentPosition() {
-        return flipMotor.getPosition().getValueAsDouble();
+        return flipMotor.getPosition();
     }
 
     public double getCurrentVelocity() {
-        return flipMotor.getVelocity().getValueAsDouble();
+        return flipMotor.getVelocity();
     }
 
     public void setAlgaeFlipperManual(double speed) {
@@ -74,6 +72,6 @@ public class AlgaeFlipperSubsystem extends SubsystemBase {
     }
 
     public void stopMotorsManual() {
-        flipMotor.stopMotor();
+        flipMotor.stop();
     }
 }
