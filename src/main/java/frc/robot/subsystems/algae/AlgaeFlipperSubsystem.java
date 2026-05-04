@@ -9,6 +9,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.AlgaeConstants;
 import net.calicoctl.bulldoglib.control.BulldogTalonFX;
 
@@ -38,7 +39,7 @@ public class AlgaeFlipperSubsystem extends SubsystemBase {
 
         config.Feedback.SensorToMechanismRatio = 45; // 45:1 gear ratio
 
-        flipMotor = new BulldogTalonFX(AlgaeConstants.flipMotorID, "AlgaeFlipMotor", config);
+        flipMotor = new BulldogTalonFX(AlgaeConstants.flipMotorID, "AlgaeFlipMotor", config, Constants.globalTuning);
 
         flipMotor.resetPosition(0);
 
@@ -60,11 +61,11 @@ public class AlgaeFlipperSubsystem extends SubsystemBase {
     }
 
     public double getCurrentPosition() {
-        return flipMotor.getPosition();
+        return flipMotor.getMechanismPosition();
     }
 
     public double getCurrentVelocity() {
-        return flipMotor.getVelocity();
+        return flipMotor.getRotorVelocity();
     }
 
     public void setAlgaeFlipperManual(double speed) {

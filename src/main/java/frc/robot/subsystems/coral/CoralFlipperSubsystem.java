@@ -8,6 +8,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.CoralConstants;
 import net.calicoctl.bulldoglib.control.BulldogTalonFX;
 
@@ -30,7 +31,7 @@ public class CoralFlipperSubsystem extends SubsystemBase {
 
         config.Feedback.SensorToMechanismRatio = 36; // 36:1 gear ratio
 
-        flipMotor = new BulldogTalonFX(CoralConstants.flipMotorID, "CoralFlipMotor", config);
+        flipMotor = new BulldogTalonFX(CoralConstants.flipMotorID, "CoralFlipMotor", config, Constants.globalTuning);
     }
 
     @Override
@@ -49,11 +50,11 @@ public class CoralFlipperSubsystem extends SubsystemBase {
     }
 
     public double getCurrentPosition() {
-        return flipMotor.getPosition();
+        return flipMotor.getMechanismPosition();
     }
 
     public double getCurrentVelocity() {
-        return flipMotor.getVelocity();
+        return flipMotor.getRotorVelocity();
     }
 
     public double getSupplyCurrent() {

@@ -1,26 +1,26 @@
 package frc.robot.subsystems.algae;
 
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.AlgaeConstants;
+import net.calicoctl.bulldoglib.control.BulldogSparkMax;
 
 public class AlgaeWheelsSubsystem extends SubsystemBase {
 
-    private final SparkMax rightMotor;
-    private final SparkMax leftMotor;
+    private final BulldogSparkMax rightMotor;
+    private final BulldogSparkMax leftMotor;
 
     public AlgaeWheelsSubsystem() {
-
-        rightMotor = new SparkMax(AlgaeConstants.rightMotorID, MotorType.kBrushless);
-        leftMotor = new SparkMax(AlgaeConstants.leftMotorID, MotorType.kBrushless);
-        
+        rightMotor = new BulldogSparkMax(AlgaeConstants.rightMotorID, "RightAlgaeWheelMotor", new SparkMaxConfig(), MotorType.kBrushless, false, Constants.globalTuning);
+        leftMotor = new BulldogSparkMax(AlgaeConstants.leftMotorID, "LeftAlgaeWheelMotor", new SparkMaxConfig(), MotorType.kBrushless, false, Constants.globalTuning);
     }
 
     public void stopWheelMotors() {
-        rightMotor.stopMotor();
-        leftMotor.stopMotor();
+        rightMotor.stop();
+        leftMotor.stop();
     }
 
     public void setWheelMotors(double speed) {

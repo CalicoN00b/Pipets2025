@@ -31,6 +31,8 @@ import edu.wpi.first.units.measure.Angle;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public static final boolean globalTuning = false;
+
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds

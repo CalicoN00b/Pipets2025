@@ -9,6 +9,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.ElevatorConstants;
 import net.calicoctl.bulldoglib.control.BulldogTalonFX;
 
@@ -36,8 +37,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         
         config.Feedback.SensorToMechanismRatio = 9; // 9:1 gear ratio 
 
-        primaryMotor = new BulldogTalonFX(ElevatorConstants.primaryElevatorID, "PrimaryElevatorMotor", config);
-        followerMotor = new BulldogTalonFX(ElevatorConstants.followerElevatorID, "FollowerElevatorMotor", config).withLeader(primaryMotor, false);
+        primaryMotor = new BulldogTalonFX(ElevatorConstants.primaryElevatorID, "PrimaryElevatorMotor", config, Constants.globalTuning);
+        followerMotor = new BulldogTalonFX(ElevatorConstants.followerElevatorID, "FollowerElevatorMotor", config, Constants.globalTuning).withLeader(primaryMotor, false);
 
         primaryMotor.resetPosition(0);
         followerMotor.resetPosition(0);
@@ -61,11 +62,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public double getCurrentPosition() {
-        return primaryMotor.getPosition();
+        return primaryMotor.getMechanismPosition();
     }
 
     public double getCurrentVelocity() {
-        return primaryMotor.getVelocity();
+        return primaryMotor.getRotorVelocity();
     }
 
     public double getSupplyCurrent() {

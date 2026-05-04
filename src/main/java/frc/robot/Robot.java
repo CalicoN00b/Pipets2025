@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import net.calicoctl.bulldoglib.control.BulldogTalonFX;
+import net.calicoctl.bulldoglib.control.BulldogDeviceManager;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -59,8 +59,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
-    // Updates and processes inputs of all registered BulldogTalonFX's.
-    BulldogTalonFX.updateAllMotors();
+    BulldogDeviceManager.updateRegisteredDevices();
     
     m_robotContainer.updateDriverTab();
     m_robotContainer.decideElevatorPosition();
